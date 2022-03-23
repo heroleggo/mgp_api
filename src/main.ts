@@ -1,8 +1,18 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-}
-bootstrap();
+import { bootstrap } from './bootstrap';
+
+const port = process.env.PORT || 8000;
+
+bootstrap()
+    .then((app) => app.listen(8000))
+    .then(() => {
+        console.log(
+            `Application Started. Env : ${process.env.ENV}, PORT : ${port}`,
+        );
+    })
+    .catch((err) => {
+        console.error('Error occurred on bootstraping', err);
+        process.exit(1);
+    });
